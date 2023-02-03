@@ -40,7 +40,7 @@ def get_movies_by_release_contry(release_contry:str = Query(min_length=3,max_len
 @movie_router.post('/movies',tags=['movies'],status_code=201,response_model=dict)
 def create_movie(movie:Movie)->dict:
     db = Session()
-    MovieService.create_movie(db,movie)
+    MovieService(db).create_movie(movie)
     return JSONResponse(content={"message":"Se ha registrado la pelicula","status_code":201})
 
 @movie_router.put('/movies{id}',tags=['movies'])
@@ -52,7 +52,6 @@ def update_movie(id:int,movie:Movie):
     MovieService(db).update_movie(id,movie)
     return JSONResponse(content={"message":"Se ha modificado la pelicula con id: {id}"})
 
-   
 
 @movie_router.delete('/movies/{id}',tags=['movies'])
 def delete_movie(id:int):
